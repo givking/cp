@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MailMapper">
+	<insert id="save" parameterType="mail" >
+		insert into TB_MAILSETTING(
+			NICK_NAME,
+			EMAIL,
+			PASSWORD,
+			SMTP_HOST,
+			SMTP_PORT,
+			IS_SMTP_SSL,
+			POP_HOST,
+			POP_PORT,
+			USER_ID
+			)values(
+			#{nick_name},
+			#{email},
+			#{password},
+			#{smtp_host},
+			#{smtp_port},
+			#{is_smtp_ssl},
+			#{pop_host},
+			#{pop_port},
+			#{user_id}
+		)
+	</insert>
+	
+	
+	
+	<update id="edit" parameterType="mail">
+		update TB_MAILSETTING
+		set
+			NICK_NAME=#{nick_name},
+			EMAIL=#{email},
+			PASSWORD=#{password},
+			SMTP_HOST=#{smtp_host},
+			SMTP_PORT=#{smtp_port},
+			IS_SMTP_SSL=#{is_smtp_ssl},
+			POP_HOST=#{pop_host},
+			POP_PORT=#{pop_port},
+			USER_ID=USER_ID
+		where
+			USER_ID=#{user_id}
+	</update>
+	<!-- 通过id查找 -->
+	<select id="findbyid" parameterType="mail" resultType="mail">
+		select * from TB_MAILSETTING 
+		where
+			USER_ID=#{user_id}
+	</select>
+</mapper>

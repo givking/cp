@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mail_receiveMapper">
+	<insert id="save" parameterType="mail_receive" >
+		insert into MAIL_RECEIVE(
+			RECIPIENT,
+			MAIL_UID,
+			ADDRESSER,
+			SUBJECT,
+			CONTENT,
+			CREATE_TIME,
+			MAIL_RECEIVE_ID
+			)values(
+			#{recipient},
+			#{mail_uid},
+			#{addresser},
+			#{subject},
+			#{content},
+			#{create_time},
+			#{mail_receive_id}
+		)
+	</insert>
+	
+	<select id="datalistpage" parameterType="page" resultType="mail_receive">
+		select 
+		a.RECIPIENT,
+		a.MAIL_UID,
+		a.ADDRESSER,
+		a.SUBJECT,
+		a.CONTENT,
+		a.CREATE_TIME,
+		a.MAIL_RECEIVE_ID 
+		from MAIL_RECEIVE a
+	</select>
+	
+	<delete id="del" parameterType="mail_receive">
+		delete from SYS_MENU
+		where MENU_ID=#{menu_id}
+	</delete>
+	<update id="edit" parameterType="mail_receive">
+		update TB_MAILSETTING
+		set
+			NICK_NAME=#{nick_name},
+			EMAIL=#{email},
+			PASSWORD=#{password},
+			SMTP_HOST=#{smtp_host},
+			SMTP_PORT=#{smtp_port},
+			IS_SMTP_SSL=#{is_smtp_ssl},
+			POP_HOST=#{pop_host},
+			POP_PORT=#{pop_port},
+			USER_ID=USER_ID
+		where
+			USER_ID=#{user_id}
+	</update>
+	<!-- 通过uid查找 -->
+	<select id="findbyuid" parameterType="mail_receive" resultType="mail_receive">
+		select * from MAIL_RECEIVE 
+		where
+			MAIL_UID=#{mail_uid}
+	</select>
+	<!-- 通过id查找 -->
+	<select id="findbyid" parameterType="mail_receive" resultType="mail_receive">
+		select * from MAIL_RECEIVE 
+		where
+			MAIL_RECEIVE_ID=#{mail_receive_id}
+	</select>
+</mapper>

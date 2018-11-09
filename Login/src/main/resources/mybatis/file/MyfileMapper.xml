@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MyfileMapper">
+	<insert id="save" parameterType="myfile" >
+		insert into SYS_FILE(
+		FILE_NAME,
+		FILE_PATH,
+		KEY_WORD,
+		FILE_ID
+		)values(
+		#{file_name},
+		#{file_path},
+		#{key_word},
+		#{file_id}
+		)
+	</insert>
+	
+	<select id="datalistpage" parameterType="myfile" resultType="myfile">
+		select 
+		a.FILE_NAME,
+		a.FILE_PATH,
+		a.FILE_ID 
+		from SYS_FILE a
+	</select>
+	
+	<delete id="del" parameterType="myfile">
+		delete from SYS_FILE
+		where FILE_ID=#{file_id}
+	</delete>
+	<!-- 通过id查找 -->
+	<select id="findbyid" parameterType="myfile" resultType="myfile">
+		select * from SYS_FILE
+		where
+			FILE_ID=#{file_id}
+	</select>
+	<!-- 通过name查找 -->
+	<select id="findbyname" parameterType="myfile" resultType="myfile">
+		select * from SYS_FILE
+		where
+			FILE_NAME=#{file_name}
+	</select>
+	<select id="search" parameterType="myfile" resultType="myfile">
+		select * from SYS_FILE a
+		where
+			a.FILE_NAME LIKE CONCAT(CONCAT('%',#{key_word}),'%')
+	</select> 
+	<!-- <update id="edit" parameterType="menu">
+		update SYS_MENU
+		set
+			MENU_NAME=#{menu_name},
+			MENU_URL=#{menu_url},
+			MENU_ID=MENU_ID
+		where
+			MENU_ID=#{menu_id}
+	</update>
+	
+	-->
+</mapper>

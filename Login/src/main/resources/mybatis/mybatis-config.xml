@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD SQL Map Config 3.0//EN"  
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<settings> 
+        <setting name="cacheEnabled" value="true" /><!-- 全局映射器启用缓存 -->   
+        <setting name="useGeneratedKeys" value="true" /> 
+        <setting name="defaultExecutorType" value="REUSE" /> 
+    </settings>
+
+	<typeAliases>
+		<typeAlias type="tt.entity.User" alias="user"/>
+		<typeAlias type="tt.entity.Menu" alias="menu"/>
+		<typeAlias type="tt.entity.Role" alias="role"/>
+		<typeAlias type="tt.entity.Role_menu" alias="role_menu"/>
+		<typeAlias type="tt.entity.Myfile" alias="myfile"/>
+		<typeAlias type="tt.entity.Dispatch" alias="dispatch"/>
+		<typeAlias type="tt.entity.Mail" alias="mail"/>
+		<typeAlias type="tt.entity.Mail_send" alias="mail_send"/>
+		<typeAlias type="tt.entity.Mail_receive" alias="mail_receive"/>
+		<typeAlias type="tt.entity.Area" alias="area"/>
+		<typeAlias type="tt.tools.PageUtil" alias="page"/>
+	</typeAliases>
+	<plugins>
+	<plugin interceptor="tt.tools.PagePlugin">
+			<property name="dialect" value="mysql"/>
+			<property name="pageSqlId" value=".*listpage.*"/>
+		</plugin>
+	</plugins>
+	
+	
+</configuration>

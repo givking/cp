@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MenuMapper">
+	<insert id="save" parameterType="menu" >
+		insert into SYS_MENU(
+		MENU_NAME,
+		MENU_URL,
+		MENU_ID
+		)values(
+		#{menu_name},
+		#{menu_url},
+		#{menu_id}
+		)
+	</insert>
+	
+	<select id="datalist" parameterType="menu" resultType="menu">
+		select 
+		a.MENU_NAME,
+		a.MENU_URL,
+		a.MENU_ID 
+		from SYS_MENU a
+	</select>
+	
+	<delete id="del" parameterType="menu">
+		delete from SYS_MENU
+		where MENU_ID=#{menu_id}
+	</delete>
+	<update id="edit" parameterType="menu">
+		update SYS_MENU
+		set
+			MENU_NAME=#{menu_name},
+			MENU_URL=#{menu_url},
+			MENU_ID=MENU_ID
+		where
+			MENU_ID=#{menu_id}
+	</update>
+	<!-- 通过id查找 -->
+	<select id="findbyid" parameterType="menu" resultType="menu">
+		select * from SYS_MENU 
+		where
+			MENU_ID=#{menu_id}
+	</select>
+</mapper>

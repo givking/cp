@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DispatchMapper">
+	<insert id="save" parameterType="dispatch" >
+		insert into TB_DISPATCH(
+		NAME,
+		DRAFTER,
+		CONTENT,
+		CHECKER,
+		CHECKER_NAME,
+		APPROVER,
+		APPROVER_NAME,
+		CREATE_TIME,
+		UPDATE_TIME,
+		STATUS,
+		SUGGESTION,
+		DISPATCH_ID
+		)values(
+		#{name},
+		#{drafter},
+		#{content},
+		#{checker},
+		#{checker_name},
+		#{approver},
+		#{approver_name},
+		#{create_time},
+		#{update_time},
+		#{status},
+		#{suggestion},
+		#{dispatch_id}
+		)
+	</insert>
+	
+	<select id="datalistpage" parameterType="page" resultType="dispatch">
+		select 
+		a.NAME,
+		a.DRAFTER,
+		a.CONTENT,
+		a.CHECKER,
+		a.APPROVER,
+		a.CREATE_TIME,
+		a.UPDATE_TIME,
+		a.STATUS,
+		a.SUGGESTION,
+		a.DISTRIBUTE,
+		u.NAME CHECKER_NAME,
+		u2.NAME APPROVER_NAME,
+		a.DISPATCH_ID 
+		from TB_DISPATCH a
+		left join TB_USER u
+		on a.CHECKER=u.user_id
+		left join TB_USER u2
+		on a.APPROVER=u2.user_id
+		
+	</select>
+	<!-- 分页列表 -->
+	<select id="ddatalistpage" parameterType="page" resultType="dispatch">
+		select 
+		a.NAME,
+		a.DRAFTER,
+		a.CONTENT,
+		a.CHECKER,
+		a.APPROVER,
+		a.CREATE_TIME,
+		a.UPDATE_TIME,
+		a.STATUS,
+		a.SUGGESTION,
+		a.DISTRIBUTE,
+		u.NAME CHECKER_NAME,
+		u2.NAME APPROVER_NAME,
+		a.DISPATCH_ID 
+		from TB_DISPATCH a
+		left join TB_USER u
+		on a.CHECKER=u.user_id
+		left join TB_USER u2
+		on a.APPROVER=u2.user_id
+		
+	</select>
+	<!-- 校核列表 -->
+	<select id="checklistpage" parameterType="page" resultType="dispatch">
+		select 
+		a.NAME,
+		a.DRAFTER,
+		a.CONTENT,
+		a.CHECKER,
+		a.APPROVER,
+		a.CREATE_TIME,
+		a.UPDATE_TIME,
+		a.STATUS,
+		a.SUGGESTION,
+		a.DISTRIBUTE,
+		u.NAME CHECKER_NAME,
+		u2.NAME APPROVER_NAME,
+		a.DISPATCH_ID 
+		from TB_DISPATCH a
+		left join TB_USER u
+		on a.CHECKER=u.user_id
+		left join TB_USER u2
+		on a.APPROVER=u2.user_id
+		where a.CHECKER=#{obj.user_id}
+	</select>
+	
+	<!-- 审批列表 -->
+	<select id="approverlistpage" parameterType="page" resultType="dispatch">
+		select 
+		a.NAME,
+		a.DRAFTER,
+		a.CONTENT,
+		a.CHECKER,
+		a.APPROVER,
+		a.CREATE_TIME,
+		a.UPDATE_TIME,
+		a.STATUS,
+		a.SUGGESTION,
+		u.NAME CHECKER_NAME,
+		u2.NAME APPROVER_NAME,
+		a.DISPATCH_ID 
+		from TB_DISPATCH a
+		left join TB_USER u
+		on a.CHECKER=u.user_id
+		left join TB_USER u2
+		on a.APPROVER=u2.user_id
+		where a.APPROVER=#{obj.user_id}
+		and (a.STATUS="1" or a.STATUS="3" or a.STATUS="4")
+	</select>
+	<!-- 收文列表 -->
+	<select id="receiptlistpage" parameterType="page" resultType="dispatch">
+		select 
+		a.NAME,
+		a.DRAFTER,
+		a.CONTENT,
+		a.CHECKER,
+		a.APPROVER,
+		a.CREATE_TIME,
+		a.UPDATE_TIME,
+		a.STATUS,
+		a.SUGGESTION,
+		a.RECIPIENT,
+		a.SIGN,
+		u.NAME CHECKER_NAME,
+		u2.NAME APPROVER_NAME,
+		u3.NAME RECIPENT_NAME,
+		a.DISPATCH_ID 
+		from TB_DISPATCH a
+		left join TB_USER u
+		on a.CHECKER=u.user_id
+		left join TB_USER u2
+		on a.APPROVER=u2.user_id
+		left join TB_USER u3
+		on a.RECIPIENT=u3.user_id
+		where 1=1 
+		<if test="obj.recipient!=null and obj.recipient!=''">
+		and	a.RECIPIENT=#{obj.recipient}
+		</if>
+		and a.STATUS="3"
+	</select>
+	<!-- 收件箱列表 -->
+	<select id="inboxlistpage" parameterType="page" resultType="dispatch">
+		select 
+		a.NAME,
+		a.DRAFTER,
+		a.CONTENT,
+		a.CHECKER,
+		a.APPROVER,
+		a.CREATE_TIME,
+		a.UPDATE_TIME,
+		a.STATUS,
+		a.SUGGESTION,
+		a.RECIPIENT,
+		a.DISTRIBUTE,
+		a.SIGN,
+		
+		a.DISPATCH_ID 
+		from TB_DISPATCH a
+		
+		where 1=1
+		<if test="obj.recipient!=null and obj.recipient!=''">
+		and a.DISTRIBUTE=#{obj.distribute}
+		 </if>
+		and a.SIGN="1"
+	</select>
+	
+	<delete id="del" parameterType="dispatch">
+		delete from TB_DISPATCH
+		where DISPATCH_ID=#{dispatch_id}
+	</delete>
+	<update id="edit" parameterType="dispatch">
+		update TB_DISPATCH
+		set
+			NAME=#{name},
+			DRAFTER=#{drafter},
+			CONTENT=#{content},
+			CHECKER=#{checker},
+			APPROVER=#{approver},
+			STATUS=#{status},
+			SUGGESTION=#{suggestion},
+			RECIPIENT=#{recipient},
+			SIGN=#{sign},
+			DISTRIBUTE=#{distribute},
+			CREATE_TIME=#{create_time},
+			UPDATE_TIME=#{update_time},
+			DISPATCH_ID=DISPATCH_ID
+		where
+			DISPATCH_ID=#{dispatch_id}
+	</update>
+	<!-- 通过id查找 -->
+	<select id="findbyid" parameterType="dispatch" resultType="dispatch">
+		select 
+		a.NAME,
+		a.DRAFTER,
+		a.CONTENT,
+		a.CHECKER,
+		a.APPROVER,
+		a.CREATE_TIME,
+		a.UPDATE_TIME,
+		a.STATUS,
+		a.SUGGESTION,
+		a.RECIPIENT,
+		a.SIGN,
+		a.DISTRIBUTE,
+		u.NAME CHECKER_NAME,
+		u2.NAME APPROVER_NAME,
+		u3.NAME RECIPENT_NAME,
+		a.DISPATCH_ID  
+		from TB_DISPATCH a
+		left join TB_USER u
+		on a.CHECKER=u.user_id
+		left join TB_USER u2
+		on a.APPROVER=u2.user_id
+		left join TB_USER u3
+		on a.RECIPIENT=u3.user_id
+		where
+			DISPATCH_ID=#{dispatch_id}
+	</select>
+</mapper>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AreaMapper">
+	<!-- 新增 -->
+	<insert id="save" parameterType="area" >
+		insert into TB_AREA(
+		AREA_NAME,
+		CREATE_TIME,
+		PARENT_ID,
+		AREA_ID
+		)values(
+		#{area_name},
+		#{create_time},
+		#{parent_id},
+		#{area_id}
+		)
+	</insert>
+	<!-- 修改 -->
+	<update id="edit" parameterType="area">
+		update TB_AREA
+		set
+			AREA_NAME=#{area_name},
+			CREATE_TIME=#{create_time},
+			AREA_ID=AREA_ID
+			where 
+				AREA_ID = #{area_id}
+		
+	</update>
+	<delete id="del" parameterType="area">
+		delete from TB_AREA
+		where AREA_ID=#{area_id}
+	</delete>
+	<!-- 检查用户名是否存在 -->
+	<select id="findbyname" parameterType="area" resultType="area">
+		select * from TB_AREA
+		where AREA_NAME=#{area_name}
+	</select>
+	<!-- 通过id查数据 -->
+	<select id="findbyid" parameterType="area" resultType="area">
+		select * from TB_AREA
+		where AREA_ID=#{area_id}
+	</select>
+	<!-- 列表 -->
+	<select id="datalist" parameterType="area" resultType="area">
+		select 
+		a.AREA_NAME,
+		a.CREATE_TIME,
+		a.PARENT_ID,
+		a.AREA_ID 
+		from TB_AREA a
+	</select>
+	<!-- 查询树 -->
+	<!-- <select id="fulltree" parameterType="area" resultType="area">
+		select 
+		a.NAME,
+		a.ROLE_ID,
+		a.AREA_ID,
+		'AREA' type
+		from TB_AREA a
+		union
+		select 
+		b.ROLE_NAME NAME,
+		0 ROLE_ID,
+		b.ROLE_ID AREA_ID,
+		'ROLE' type
+		from SYS_ROLE b
+	</select> -->
+	
+</mapper>

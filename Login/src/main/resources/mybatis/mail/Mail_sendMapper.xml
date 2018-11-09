@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mail_sendMapper">
+	<insert id="save" parameterType="mail_send" >
+		insert into MAIL_SEND(
+			RECIPIENT,
+			SUBJECT,
+			CONTENT,
+			CREATE_TIME,
+			MAIL_SEND_ID
+			)values(
+			#{recipient},
+			#{subject},
+			#{content},
+			#{create_time},
+			#{mail_send_id}
+		)
+	</insert>
+	
+	<select id="datalistpage" parameterType="page" resultType="mail_send">
+		select 
+		a.RECIPIENT,
+		a.SUBJECT,
+		a.CONTENT,
+		a.MAIL_SEND_ID 
+		from MAIL_SEND a
+	</select>
+	
+	<delete id="del" parameterType="menu">
+		delete from SYS_MENU
+		where MENU_ID=#{menu_id}
+	</delete>
+	<update id="edit" parameterType="mail">
+		update TB_MAILSETTING
+		set
+			NICK_NAME=#{nick_name},
+			EMAIL=#{email},
+			PASSWORD=#{password},
+			SMTP_HOST=#{smtp_host},
+			SMTP_PORT=#{smtp_port},
+			IS_SMTP_SSL=#{is_smtp_ssl},
+			POP_HOST=#{pop_host},
+			POP_PORT=#{pop_port},
+			USER_ID=USER_ID
+		where
+			USER_ID=#{user_id}
+	</update>
+	<!-- 通过id查找 -->
+	<select id="findbyid" parameterType="mail" resultType="mail">
+		select * from TB_MAILSETTING 
+		where
+			USER_ID=#{user_id}
+	</select>
+</mapper>

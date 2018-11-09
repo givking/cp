@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserMapper">
+	<!-- 新增 -->
+	<insert id="save" parameterType="user" >
+		insert into TB_USER(
+		NAME,
+		PASSWORD,
+		EMAIL,
+		EMAILSTATUS,
+		ROLE_NAME,
+		ROLE_ID,
+		USER_ID
+		)values(
+		#{name},
+		#{password},
+		#{email},
+		#{emailstatus},
+		#{role_name},
+		#{role_id},
+		#{user_id}
+		)
+	</insert>
+	<!-- 修改 -->
+	<update id="edit" parameterType="user">
+		update TB_USER
+		set
+			NAME=#{name},
+			PASSWORD=#{password},
+			EMAILSTATUS=#{emailstatus},
+			ROLE_ID=#{role_id},
+			ROLE_NAME=#{role_name},
+			USER_ID=USER_ID
+			where 
+				USER_ID = #{user_id}
+		
+	</update>
+	<!-- 检查用户名是否存在 -->
+	<select id="findbyname" parameterType="user" resultType="user">
+		select * from TB_USER
+		where NAME=#{name}
+	</select>
+	<!-- 通过id查数据 -->
+	<select id="findbyid" parameterType="user" resultType="user">
+		select * from TB_USER
+		where USER_ID=#{user_id}
+	</select>
+	<!-- 列表 -->
+	<select id="datalist" parameterType="user" resultType="user">
+		select 
+		a.NAME,
+		a.EMAILSTATUS,
+		a.ROLE_ID,
+		r.ROLE_NAME,
+		a.USER_ID 
+		from TB_USER a
+		left join SYS_ROLE r
+		on a.ROLE_ID = r.ROLE_ID
+	</select>
+	<!-- 查询树 -->
+	<select id="fulltree" parameterType="user" resultType="user">
+		select 
+		a.NAME,
+		a.ROLE_ID,
+		a.USER_ID,
+		'USER' type
+		from TB_USER a
+		union
+		select 
+		b.ROLE_NAME NAME,
+		0 ROLE_ID,
+		b.ROLE_ID USER_ID,
+		'ROLE' type
+		from SYS_ROLE b
+	</select>
+	
+</mapper>

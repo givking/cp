@@ -1,0 +1,15 @@
+eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
+encoding//src/main/java/payment/util/Signature.java=UTF-8
+encoding//src/main/java/payment/util/WeixinPayApi.java=gbk
+encoding//src/main/java/payment/util/XMLParser.java=UTF-8
+encoding//src/main/resources=UTF-8
+encoding//src/main/resources/log4j.properties=UTF-8
+encoding//src/main/webapp/WEB-INF/jsp/dispatch/check/check.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/jsp/login.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/jsp/loginsuccess.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/jsp/mainpage.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/jsp/welcomlogin.jsp=UTF-8
+encoding//src/main/webapp/index.jsp=UTF-8
+encoding//src/main/webapp/static/plugin/ueditor/ueditor.config.js=UTF-8
+encoding/<project>=UTF-8

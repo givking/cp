@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RoleMapper">
+	
+	<!-- 查找角色id -->
+	<select id="findbyid" parameterType="role" resultType="role">
+		select * from SYS_ROLE
+		where ROLE_ID=#{role_id}
+	</select>
+	<!-- 列表 -->
+	<select id="datalist" parameterType="role" resultType="role">
+		select 
+		a.ROLE_NAME,
+		a.ROLE_ID
+		from SYS_ROLE a
+		
+	</select>
+	
+</mapper>

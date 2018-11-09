@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Role_MenuMapper">
+	<insert id="save" parameterType="role_menu" >
+		insert into SYS_ROLE_MENU(
+		ROLE_ID,
+		MENU_ID,
+		ROLE_MENU_ID
+		)values(
+		#{role_id},
+		#{menu_id},
+		#{role_menu_id}
+		)
+	</insert>
+	<select id="datalist" parameterType="role_menu" resultType="role_menu">
+		select 
+		a.ROLE_ID,
+		a.MENU_ID,
+		a.ROLE_MENU_ID 
+		from SYS_ROLE_MENU a
+	</select>
+	<delete id="delete" parameterType="role_menu">
+		delete from SYS_ROLE_MENU
+		where MENU_ID=#{menu_id}
+		and ROLE_ID=#{role_id}
+	</delete>
+	<!-- 通过menu_id删除 -->
+	<delete id="del" parameterType="role_menu">
+		delete from SYS_ROLE_MENU
+		where MENU_ID=#{menu_id}
+		
+	</delete>
+	<!-- 通过role_id查找 -->
+	<select id="findbyroleid" parameterType="role_menu" resultType="role_menu">
+		select * from SYS_ROLE_MENU 
+		where
+			ROLE_ID=#{role_id}
+	</select>
+	<!-- 通过menu_id查找 -->
+	<select id="findbymenuid" parameterType="role_menu" resultType="role_menu">
+		select * from SYS_ROLE_MENU 
+		where
+			MENU_ID=#{menu_id}
+	</select>
+	<!-- 
+	
+	<update id="edit" parameterType="menu">
+		update SYS_MENU
+		set
+			MENU_NAME=#{menu_name},
+			MENU_URL=#{menu_url},
+			MENU_ID=MENU_ID
+		where
+			MENU_ID=#{menu_id}
+	</update>
+	 -->
+</mapper>
